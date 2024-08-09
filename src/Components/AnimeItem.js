@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom';
 
 function AnimeItem() {
     const {id} = useParams()
-
-
     //state
     const [anime, setAnime] = React.useState({})
     const [characters, setCharacters] = React.useState([])
@@ -19,6 +18,14 @@ function AnimeItem() {
       score,scored_by, popularity, 
       status, rating, source } = anime
 
+
+    
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate('/');
+    };
+    
     //get id of anime
     const getAnime = async (anime) => {
         const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}`)
@@ -35,15 +42,21 @@ function AnimeItem() {
         console.log(data.data)
     }
 
-
     useEffect(() => {
         getAnime(id)
         getCharacters(id)
     }, [])
 
+
+
   return (
     <AnimeItemStyled>
         <h1>{title}</h1>
+        <button onClick={handleBackClick} style={back_button_styles.backButton}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={back_button_styles.arrowIcon}>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
         <div className='details'>
           <div className='detail'>
             <div className='image'>
@@ -100,6 +113,25 @@ function AnimeItem() {
     </AnimeItemStyled >
   )
 }
+
+const back_button_styles = {
+  backButton: {
+      position: 'absolute',
+      top: '20px',
+      left: '20px',
+      backgroundColor: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '10px',
+      borderRadius: '50%',
+      transition: 'background-color 0.3s',
+  },
+  arrowIcon: {
+      width: '24px',
+      height: '24px',
+      color: '#32CD32', 
+  }
+};
 
 const AnimeItemStyled = styled.div`
     padding: 3rem 18rem;
