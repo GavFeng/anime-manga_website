@@ -59,6 +59,7 @@ function HomePage() {
           <div className="filter-btn popular-filter">
             <button onClick={() => {
               setRendered('popular')
+              getPopularAnime()
             }}>Popular</button>
           </div>
           <form action="" className="search-form" onSubmit={handleSubmit}>

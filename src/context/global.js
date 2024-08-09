@@ -67,6 +67,14 @@ export const GlobalContextProvider = ({children}) => {
         }
     }
 
+    const getIntialAnime = async () => {
+        dispatch({type: LOADING})
+        state.isSearch = false;
+        const response = await fetch(`${baseUrl}/top/anime?filter=bypopularity`);
+        const data = await response.json();
+        dispatch({type: GET_POPULAR_ANIME, payload: data.data});
+    };
+
     const getPopularAnime = async () => {
         dispatch({type: LOADING})
         state.isSearch = false;
@@ -100,7 +108,7 @@ export const GlobalContextProvider = ({children}) => {
 
     //intial render 
     React.useEffect(() => {
-        getPopularAnime();
+        getIntialAnime();
     }, [])
 
     return(
