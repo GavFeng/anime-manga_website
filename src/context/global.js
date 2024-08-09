@@ -13,6 +13,8 @@ const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
 const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 const GET_AIRING_ANIME = "GET_AIRING_ANIME";
 
+const GET_POPULAR_MANGA = "GET_POPULAR_MANGA";
+
 //reducer
 const reducer = (state, action) => {
     switch(action.type){
@@ -26,6 +28,8 @@ const reducer = (state, action) => {
             return{...state, upcomingAnime: action.payload, loading: false}
         case GET_AIRING_ANIME:
             return{...state, airingAnime: action.payload, loading: false}
+        case GET_POPULAR_MANGA:
+            return{...state, popularManga: action.payload, loading: false}
         default:
             return state;
     }
@@ -40,12 +44,12 @@ export const GlobalContextProvider = ({children}) => {
         isSearch: false,
         searchResults: [],
         searchResultsCount: 0,
-        loading: false, 
+        loading: false,
+        popularManga: [],
     }
 
     const [state, dispatch] = useReducer(reducer, intialState);
     const [search, setSearch] = React.useState('');
-
 
     //handle change
     const handleChange = (e) => {
@@ -55,25 +59,37 @@ export const GlobalContextProvider = ({children}) => {
         }
     }
 
+    const handleChangeManga = (e) => {
+        setSearch(e.target.value);
+        if(e.target.value === ''){
+            state.isSearch = false;
+        }
+    }
+
     //handle submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(search){
+        if (search) {
+            state.isSearch = true;
             searchAnime(search);
+        } else {
+            state.isSearch = false;
+            alert('Please enter a search term');
+        }
+    };
+
+    //handle submit
+    const handleSubmitManga = (e) => {
+        e.preventDefault();
+        if(search){
+            searchManga(search);
             state.isSearch = true;
         }else{
             state.isSearch = false;
             alert('Please enter a search term')
         }
     }
-
-    const getIntialAnime = async () => {
-        dispatch({type: LOADING})
-        state.isSearch = false;
-        const response = await fetch(`${baseUrl}/top/anime?filter=bypopularity`);
-        const data = await response.json();
-        dispatch({type: GET_POPULAR_ANIME, payload: data.data});
-    };
+    
 
     const getPopularAnime = async () => {
         dispatch({type: LOADING})
@@ -106,21 +122,35 @@ export const GlobalContextProvider = ({children}) => {
         dispatch({type: SEARCH, payload: data.data});
     }
 
-    //intial render 
-    React.useEffect(() => {
-        getIntialAnime();
-    }, [])
+    const searchManga = async (manga) => {
+        dispatch({type: LOADING})
+        const response = await fetch(`https://api.jikan.moe/v4/manga?q=${manga}&order_by=popularity&sort=asc&sfw`);
+        const data = await response.json();
+        dispatch({type: SEARCH, payload: data.data});
+    }
+
+    const getPopularManga = async () => {
+        dispatch({type: LOADING})
+        state.isSearch = false;
+        const response = await fetch(`${baseUrl}/top/manga?filter=bypopularity`);
+        const data = await response.json();
+        dispatch({type: GET_POPULAR_MANGA, payload: data.data});
+    };
+
 
     return(
         <GlobalContext.Provider value={{
             ...state,
             handleChange,
             handleSubmit,
+            handleChangeManga,
+            handleSubmitManga,
             searchAnime,
             search,
             getPopularAnime,
             getUpcomingAnime,
-            getAiringAnime
+            getAiringAnime,
+            getPopularManga,
         }}>
             {children}
         </GlobalContext.Provider>

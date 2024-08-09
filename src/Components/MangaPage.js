@@ -1,105 +1,82 @@
 import React from 'react'
 import { useGlobalContext } from '../context/global'
-import Popular from './PopularAnime'
+import Popular from './PopularManga'
 import styled from 'styled-components'
-import Upcoming from './UpcomingAnime'
-import Airing from './AiringAnime'
-import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from './LoadingOverlay';
+import { useNavigate } from 'react-router-dom';
 
-function HomePage() {
+function MangaPage() {
 
-
-  const { handleChange, 
-          handleSubmit, 
+  const { handleChangeManga, 
+          handleSubmitManga, 
           search, 
-          searchAnime,
-          getUpcomingAnime,
-          getAiringAnime, 
-          getPopularAnime,
+          searchManga,
+          getPopularManga,
           searchResultsCount,
           isSearch
         } = useGlobalContext()
 
       
-  const [rendered, setRendered] = React.useState('popular')
+  const [rendered, setRendered] = React.useState('popular_manga')
   const [loading, setLoading] = React.useState(false)
-  
+
   const switchComponent = () => {
     switch(rendered){
-      case 'popular':
+      case 'popular_manga':
         return <Popular rendered={rendered} />
-      case 'airing':
-        return <Airing rendered={rendered} />
-      case 'upcoming':
-        return <Upcoming rendered={rendered} />
       default:
         return <Popular rendered={rendered} /> 
     }
   }
 
   const navigate = useNavigate();
-  
+
+
   React.useEffect(() => {
     setLoading(true); 
-    getPopularAnime()
+    getPopularManga()
       .finally(() => {
         setLoading(false); 
       });
   }, []);
+
 
   const getTitle = () => {
     if (isSearch) {
       return `Search Results for "${search}"`;
     }
     switch (rendered) {
-      case 'airing':
-        return 'Airing Anime';
-      case 'upcoming':
-        return 'Upcoming Anime';
-      default: // 'popular'
-        return 'Popular Anime';
+      case 'popular_manga':
+        return 'Popular Manga';
+      default: 
+        return 'Popular Manga';
     }
   };
 
-  const handleButtonClick = (action) => {
-    setLoading(true); // Show loading spinner
-    action();
-    setTimeout(() => {
-      setLoading(false); 
-    }, 800); // Adjust delay
-  };
-
-  const handleMangaClick = () => {
-      navigate('/manga_home');
-  };
-
-  const handleFormSubmit = (e) => {
+  const handleFormSubmitManga = (e) => {
     e.preventDefault();
     setLoading(true); 
-    handleSubmit(e); 
+    handleSubmitManga(e); 
     setTimeout(() => {
       setLoading(false); 
     }, 1500); 
   };
 
+  const handleAnimeClick = () => {
+    navigate('/');
+};
+
   return (
     <HomePageStyled>
-      {loading && <LoadingOverlay />}
+    {loading && <LoadingOverlay />}
       <header>
         <div className="logo">
           <h1>{getTitle()}</h1>
         </div>
         <div className="search-container">
-        <div className="filter-btn popular-filter">
-          <button onClick={() => handleButtonClick(() => {
-            setRendered('popular');
-            getPopularAnime();
-          })}>Popular</button>
-        </div>
-          <form action="" className="search-form" onSubmit={handleFormSubmit}>
+          <form action="" className="search-form" onSubmit={handleFormSubmitManga}>
             <div className="input-control">
-              <input type="text" placeholder="Search Anime" value={search} onChange={handleChange} />
+              <input type="text" placeholder="Search Manga" value={search} onChange={handleChangeManga} />
               <button type="submit">Search</button>
             </div>
             {isSearch && (
@@ -108,20 +85,8 @@ function HomePage() {
               </div>
             )}
           </form>
-          <div className="filter-btn airing-filter">
-            <button onClick={() => handleButtonClick(() => {
-              setRendered('airing');
-              getAiringAnime();
-            })}>Airing</button>
-          </div>
-          <div className="filter-btn upcoming-filter">
-            <button onClick={() => handleButtonClick(() => {
-              setRendered('upcoming');
-              getUpcomingAnime();
-            })}>Upcoming</button>
-          </div>
-          <div className="filter-btn manga">
-            <button onClick={handleMangaClick}>Manga</button>
+          <div className="filter-btn Anime">
+            <button onClick={handleAnimeClick}>Anime</button>
           </div>
         </div>
       </header>
@@ -202,4 +167,4 @@ const HomePageStyled = styled.div`
     }
 `;
 
-export default HomePage
+export default MangaPage

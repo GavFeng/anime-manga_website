@@ -4,7 +4,7 @@ import { useGlobalContext } from '../context/global';
 import styled from 'styled-components';
 
 
-function Airing({rendered}) {
+function AiringAnime({rendered}) {
     const {airingAnime, isSearch, searchResults} = useGlobalContext()
 
     const conditionalRender = () => {
@@ -61,4 +61,4 @@ const AiringStyled = styled.div`
     }
 `;
 
-export default Airing
+export default AiringAnime

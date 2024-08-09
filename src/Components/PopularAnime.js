@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../context/global';
 import styled from 'styled-components';
 
-function Popular({rendered}) {
+function PopularAnime({rendered}) {
     const {popularAnime, isSearch, searchResults} = useGlobalContext()
 
     const conditionalRender = () => {
@@ -61,4 +61,4 @@ const PopularStyled = styled.div`
 `;
 
 
-export default Popular;
+export default PopularAnime;

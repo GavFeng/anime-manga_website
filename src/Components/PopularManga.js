@@ -3,37 +3,37 @@ import { Link } from 'react-router-dom';
 import { useGlobalContext } from '../context/global';
 import styled from 'styled-components';
 
-function Upcoming({rendered}) {
-    const {upcomingAnime, isSearch, searchResults} = useGlobalContext()
+function PopularManga({rendered}) {
+    const {popularManga, isSearch, searchResults} = useGlobalContext()
 
     const conditionalRender = () => {
-        if(!isSearch && rendered === 'upcoming'){
-            return upcomingAnime?.map((anime) => {
-                return <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> 
-                    <img src={anime.images.jpg.large_image_url} alt = "" />
+        if(!isSearch && rendered === 'popular_manga'){
+            return popularManga?.map((manga) => {
+                return <Link to={`/manga/${manga.mal_id}`} key={manga.mal_id}> 
+                    <img src={manga.images.jpg.large_image_url} alt = "" />
                 </Link>
             })
         }else{
-            return searchResults?.map((anime) => {
-                return <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> 
-                <img src={anime.images.jpg.large_image_url} alt = "" />
+            return searchResults?.map((manga) => {
+                return <Link to={`/manga/${manga.mal_id}`} key={manga.mal_id}> 
+                <img src={manga.images.jpg.large_image_url} alt = "" />
             </Link>
             })
         }
     }
 
     return  (
-        <UpcomingStyled>
-            <div className='upcoming-anime'>
+        <PopularStyled>
+            <div className='popular-manga'>
                 {conditionalRender()}
             </div>
-        </UpcomingStyled>
+        </PopularStyled>
     );
 }
 
-const UpcomingStyled = styled.div`
+const PopularStyled = styled.div`
     display: flex;
-    .upcoming-anime{
+    .popular-manga{
         margin-top: 2rem;
         padding-top: 2rem;
         padding-bottom: 2rem;
@@ -61,4 +61,4 @@ const UpcomingStyled = styled.div`
 `;
 
 
-export default Upcoming
+export default PopularManga;
