@@ -13,9 +13,9 @@ function AnimeItem() {
     //destructure anime
     const {
       title, synopsis, 
-      trailer,duration,aired, 
+      trailer, duration, aired, 
       season, images, rank, 
-      score,scored_by, popularity, 
+      score, scored_by, popularity, 
       status, rating, source } = anime
 
 

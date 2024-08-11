@@ -71,7 +71,7 @@ function HomePage() {
   };
 
   const handleMangaClick = () => {
-      navigate('/manga_home');
+      navigate('/manga');
   };
 
   const handleFormSubmit = (e) => {

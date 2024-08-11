@@ -15,8 +15,8 @@ function App(){
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/manga_home" element={<MangaPage />} />
-                <Route path="/manga_home/manga/:id" element={<MangaItem />} />
+                <Route path="/manga" element={<MangaPage />} />
+                <Route path="/manga/:id" element={<MangaItem />} />
                 <Route path="/anime/:id" element={<AnimeItem />} />
             </Routes>
         </BrowserRouter>
