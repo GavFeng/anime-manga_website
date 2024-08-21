@@ -16,7 +16,6 @@ function MangaPage() {
           isSearch
         } = useGlobalContext()
 
-      
   const [rendered, setRendered] = React.useState('popular_manga')
   const [loading, setLoading] = React.useState(false)
 
@@ -31,7 +30,6 @@ function MangaPage() {
 
   const navigate = useNavigate();
 
-
   React.useEffect(() => {
     setLoading(true); 
     getPopularManga()
@@ -39,7 +37,6 @@ function MangaPage() {
         setLoading(false); 
       });
   }, []);
-
 
   const getTitle = () => {
     if (isSearch) {
