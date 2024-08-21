@@ -10,8 +10,6 @@ function MangaItem() {
   const [characters, setCharacters] = React.useState([])
   const [showMore, setShowMore] = React.useState(false)
 
-
-
   //destructure manga
   const {
     title, synopsis, chapters,
@@ -19,13 +17,11 @@ function MangaItem() {
     score, scored_by, popularity, 
     status } = manga
 
-
   const navigate = useNavigate();
 
   const handleBackClick = () => {
       navigate('/manga');
   };
-    
 
   //get id of Manga
   const getManga = async (manga) => {
