@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const LoadingOverlay = () => {
   return (
     <LoadingOverlayStyled>
@@ -21,7 +20,7 @@ const LoadingOverlayStyled = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  pointer-events: none; /* Allow interaction with header */
+  pointer-events: none;
   
   .spinner {
     border: 4px solid rgba(255, 255, 255, 0.3);
