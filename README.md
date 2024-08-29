@@ -15,5 +15,5 @@ Ultizes Jikan API to get and filter Popular/Upcoming/Airing Anime as well as get
 
 Also Allows for the search for Anime/Manga by their title
 
-
+![screenshot](AnimeMangaWebsiteScreenShot1.png)
 
