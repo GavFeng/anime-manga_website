@@ -1,6 +1,6 @@
 
 # anime & manga website
-Built using React and Jikan API
+Built using React and Jikan Rest API
 
 # Install dependencies
 npm install
@@ -11,7 +11,7 @@ npm start
 # Features
 Website that Fetches and displays popular Anime/Manga
 
-Utilizes Jikan API to get and filter Popular/Upcoming/Airing Anime as well as getting the details of specific Anime/Manga
+Utilizes Jikan Rest API to get and filter Popular/Upcoming/Airing Anime as well as getting the details of specific Anime/Manga
 
 Anime:
 ![screenshot](AnimeMangaWebsiteScreenShot1.png)
